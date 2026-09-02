@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>טופס הימורי בחירות 2026</title>
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #212529;
+      --border-color: #dee2e6;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #0b5ed7;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    .auto-date-note {
+      font-size: 14px;
+      color: #6c757d;
+      background-color: #e9ecef;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
+    .counter-banner {
+      position: sticky;
+      top: 10px;
+      background-color: #e7f1ff;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 25px;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .counter-banner.error {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+      color: #842029;
+    }
+
+    .counter-banner.success {
+      background-color: #d1e7dd;
+      border-color: #198754;
+      color: #0f5132;
+    }
+
+    .party-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .party-label {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .party-input {
+      width: 100px !important;
+      text-align: center;
+    }
+
+    .party-input.invalid-input {
+      border: 2px solid #dc3545 !important;
+      background-color: #fff0f1;
+    }
+
+    .buttons-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0b5ed7;
+    }
+
+    button:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .radio-group input[type="radio"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    #customOptionContainer {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>הימורי בחירות 2026</h1>
+
+  <form id="electionsForm">
+    
+    <!-- שלב 1 -->
+    <div class="step active" id="step1">
+      <h2>שלב 1: פרטי המהמר</h2>
+      <div class="form-group">
+        <label for="userName">שם המהמר/ת:</label>
+        <input type="text" id="userName" name="userName" required placeholder="הכנס את שמך המלא">
+      </div>
+      <div class="form-group">
+        <label>תאריך ושעת ההימור:</label>
+        <div class="auto-date-note">⏱️ תאריך ושעת השליחה יתועדו אוטומטית בעת הגשת הטופס.</div>
+      </div>
+      <div class="buttons-container" style="justify-content: flex-end;">
+        <button type="button" onclick="nextStep(1)">המשך לשלב הבא &larr;</button>
+      </div>
+    </div>
+
+    <!-- שלב 2 -->
+    <div class="step" id="step2">
+      <h2>שלב 2: חלוקת מנדטים (סה"כ 120)</h2>
+      
+      <div class="counter-banner" id="counterBanner">
+        נותרו לחלוקה: <span id="remainingSeatCount">120</span> מנדטים
+      </div>
+
+      <div id="partiesContainer"></div>
+
+      <div class="buttons-container">
+        <button type="button" class="btn-secondary" onclick="prevStep(2)">&rarr; חזור</button>
+        <button type="button" onclick="nextStep(2)">המשך לשלב הבא &larr;</button>
+      </div>
+    </div>
+
+    <!-- שלב 3 -->
+    <div class="step" id="step3">
+      <h2>שלב 3: הימור על הרכבת הממשלה</h2>
+      <div class="form-group radio-group">
+        <label><input type="radio" name="govOption" value="ממשלה דומה ככל האפשר לנוכחית בראשות נתניהו" required onclick="toggleCustomOption(false)"> ממשלה דומה ככל האפשר לנוכחית בראשות נתניהו</label>
+        <label><input type="radio" name="govOption" value="ממשלה שונה ככל האפשר מהנוכחית בראשות מי שאינו נתניהו" onclick="toggleCustomOption(false)"> ממשלה שונה ככל האפשר מהנוכחית בראשות מי שאינו נתניהו</label>
+        <label><input type="radio" name="govOption" value="ממשלת אחדות כל שהיא בראשות נתניהו" onclick="toggleCustomOption(false)"> ממשלת אחדות כל שהיא בראשות נתניהו</label>
+        <label><input type="radio" name="govOption" value="ממשלת אחדות כל שהיא בראשות מי שאינו נתניהו" onclick="toggleCustomOption(false)"> ממשלת אחדות כל שהיא בראשות מי שאינו נתניהו</label>
+        <label><input type="radio" name="govOption" value="אחר" id="optionOther" onclick="toggleCustomOption(true)"> אופציה אחרת שתפורט בהמשך</label>
+      </div>
+
+      <div class="form-group" id="customOptionContainer">
+        <label for="customGovDetails">פרט את הצעתך/הימורך:</label>
+        <textarea id="customGovDetails" name="customGovDetails" rows="3" placeholder="פרט כאן..."></textarea>
+      </div>
+
+      <div class="buttons-container">
+        <button type="button" class="btn-secondary" onclick="prevStep(3)">&rarr; חזור</button>
+        <button type="submit" id="submitBtn">שלח הימור!</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<script>
+  // הכנס כאן את ה-URL מ-Google Apps Script
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6z6HngFtRieObZ04NZdUUhqk-EgzVoW_-ggCusETlUEETvdZ1mudWZcYRSYB_HqE/exec';
+
+  const parties = [
+    "ליכוד", "ישר - אייזנקוט", "ביחד - בנט", "הדמוקרטים",
+    "ישראל ביתנו", "המפלגה הערבית המאוחדת", "יהדות התורה", "שס",
+    "עוצמה יהודית", "רעמ", "ציונות דתית + זהות", "וינטר",
+    "חילי טרופר ויועז הנדל", "בני גנץ"
+  ];
+
+  // יצירת שדות המפלגות
+  const partiesContainer = document.getElementById('partiesContainer');
+  parties.forEach((party, index) => {
+    const row = document.createElement('div');
+    row.className = 'party-row';
+    row.innerHTML = `
+      <span class="party-label">${party}</span>
+      <input type="number" class="party-input" id="party_${index}" name="${party}" min="0" max="120" value="0" oninput="updateSeats()">
+    `;
+    partiesContainer.appendChild(row);
+  });
+
+  function updateSeats() {
+    let totalAssigned = 0;
+    let hasValidationError = false;
+
+    parties.forEach((party, index) => {
+      const input = document.getElementById(`party_${index}`);
+      let val = parseInt(input.value);
+
+      if (isNaN(val) || val < 0) {
+        val = 0;
+      }
+
+      if (val > 0 && val < 4) {
+        input.classList.add('invalid-input');
+        hasValidationError = true;
+      } else {
+        input.classList.remove('invalid-input');
+      }
+
+      totalAssigned += val;
+    });
+
+    const remaining = 120 - totalAssigned;
+    const banner = document.getElementById('counterBanner');
+
+    if (hasValidationError) {
+      banner.className = 'counter-banner error';
+      banner.innerHTML = 'שגיאה: מפלגה שעוברת חייבת לקבל לפחות 4 מנדטים (או 0).';
+    } else if (remaining < 0) {
+      banner.className = 'counter-banner error';
+      banner.innerHTML = `חורג ב-${Math.abs(remaining)} מנדטים! (סך הכל ${totalAssigned}/120)`;
+    } else if (remaining === 0) {
+      banner.className = 'counter-banner success';
+      banner.innerHTML = 'חלוקה מושלמת! חולקו בדיוק 120 מנדטים 👍';
+    } else {
+      banner.className = 'counter-banner';
+      banner.innerHTML = `נותרו לחלוקה: <strong>${remaining}</strong> מנדטים`;
+    }
+
+    return (remaining === 0 && !hasValidationError);
+  }
+
+  function nextStep(currentStep) {
+    if (currentStep === 1) {
+      const nameInput = document.getElementById('userName');
+
+      if (!nameInput.value.trim()) {
+        alert('אנא הזן את שמך.');
+        nameInput.focus();
+        return;
+      }
+    } else if (currentStep === 2) {
+      const isValid = updateSeats();
+      if (!isValid) {
+        alert('לא ניתן להמשיך! חובה לחלק בדיוק 120 מנדטים ולוודא שאין מפלגות עם 1 עד 3 מנדטים.');
+        return;
+      }
+    }
+
+    document.getElementById(`step${currentStep}`).classList.remove('active');
+    document.getElementById(`step${currentStep + 1}`).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function prevStep(currentStep) {
+    document.getElementById(`step${currentStep}`).classList.remove('active');
+    document.getElementById(`step${currentStep - 1}`).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleCustomOption(show) {
+    const container = document.getElementById('customOptionContainer');
+    container.style.display = show ? 'block' : 'none';
+    if (!show) {
+      document.getElementById('customGovDetails').value = '';
+    }
+  }
+
+  document.getElementById('electionsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (!updateSeats()) {
+      alert('חלוקת המנדטים אינה תקינה.');
+      return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'שולח...';
+
+    const formData = new FormData(this);
+    
+    // הוספת תאריך ושעה מדויקים של ההגשה
+    const now = new Date();
+    const formattedTimestamp = now.toLocaleString('he-IL');
+    formData.append('betTimestamp', formattedTimestamp);
+
+    const searchParams = new URLSearchParams();
+
+    for (const pair of formData.entries()) {
+      searchParams.append(pair[0], pair[1]);
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: searchParams
+    })
+    .then(() => {
+      alert('ההימור שלך נשלח בהצלחה והתקבל בגיליון!');
+      location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('ארעה שגיאה בשליחה.');
+      submitBtn.disabled = false;
+      submitBtn.innerText = 'שלח הימור!';
+    });
+  });
+
+  updateSeats();
+</script>
+
+</body>
+</html>
