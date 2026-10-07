@@ -1,384 +1,825 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>טופס הימורי בחירות 2026</title>
-  <style>
-    :root {
-      --primary-color: #0d6efd;
-      --bg-color: #f8f9fa;
-      --card-bg: #ffffff;
-      --text-color: #212529;
-      --border-color: #dee2e6;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: 0 auto;
-      background-color: var(--card-bg);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      position: relative;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #0b5ed7;
-    }
-
-    .step {
-      display: none;
-    }
-
-    .step.active {
-      display: block;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    input[type="text"], select, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-
-    .auto-date-note {
-      font-size: 14px;
-      color: #6c757d;
-      background-color: #e9ecef;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 5px;
-    }
-
-    .counter-banner {
-      position: sticky;
-      top: 10px;
-      background-color: #e7f1ff;
-      border: 2px solid var(--primary-color);
-      border-radius: 8px;
-      padding: 15px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 25px;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .counter-banner.error {
-      background-color: #f8d7da;
-      border-color: #dc3545;
-      color: #842029;
-    }
-
-    .counter-banner.success {
-      background-color: #d1e7dd;
-      border-color: #198754;
-      color: #0f5132;
-    }
-
-    .party-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .party-label {
-      flex: 1;
-      font-weight: 500;
-    }
-
-    .party-input {
-      width: 100px !important;
-      text-align: center;
-    }
-
-    .party-input.invalid-input {
-      border: 2px solid #dc3545 !important;
-      background-color: #fff0f1;
-    }
-
-    .buttons-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-    }
-
-    button {
-      padding: 10px 25px;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0b5ed7;
-    }
-
-    button:disabled {
-      background-color: #6c757d;
-      cursor: not-allowed;
-    }
-
-    .btn-secondary {
-      background-color: #6c757d;
-    }
-
-    .radio-group label {
-      font-weight: normal;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .radio-group input[type="radio"] {
-      width: 18px;
-      height: 18px;
-    }
-
-    #customOptionContainer {
-      display: none;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Master - אנגלית לכיתה ו'</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Rubik -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Rubik', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    },
+                    animation: {
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'bounce-short': 'bounceShort 0.5s ease infinite alternate',
+                        'pop': 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+                        },
+                        bounceShort: {
+                            '0%': { transform: 'translateY(0)' },
+                            '100%': { transform: 'translateY(-8px)' }
+                        },
+                        pop: {
+                            '0%': { transform: 'scale(0.85)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            transition: all 0.2s ease;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
+        }
+        .btn-gradient:active {
+            transform: translateY(1px);
+        }
+        .key-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.1s ease;
+            user-select: none;
+        }
+        .key-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .key-btn:active {
+            transform: scale(0.92);
+            background: rgba(56, 189, 248, 0.5);
+        }
+    </style>
 </head>
-<body>
+<body class="text-white antialiased flex flex-col justify-between min-h-screen p-3 md:p-6 select-none">
 
-<div class="container">
-  <h1>הימורי בחירות 2026</h1>
+    <header class="max-w-5xl mx-auto w-full flex justify-between items-center glass-card rounded-2xl p-4 mb-4 shadow-xl">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-2xl shadow-lg">
+                🎓
+            </div>
+            <div>
+                <h1 class="text-xl md:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-400">
+                    English Master
+                </h1>
+                <p class="text-xs text-slate-300 font-medium">אלופי האנגלית - כיתה ו'</p>
+            </div>
+        </div>
 
-  <form id="electionsForm">
-    
-    <!-- שלב 1 -->
-    <div class="step active" id="step1">
-      <h2>שלב 1: פרטי המהמר</h2>
-      <div class="form-group">
-        <label for="userName">שם המהמר/ת:</label>
-        <input type="text" id="userName" name="userName" required placeholder="הכנס את שמך המלא">
-      </div>
-      <div class="form-group">
-        <label>תאריך ושעת ההימור:</label>
-        <div class="auto-date-note">⏱️ תאריך ושעת השליחה יתועדו אוטומטית בעת הגשת הטופס.</div>
-      </div>
-      <div class="buttons-container" style="justify-content: flex-end;">
-        <button type="button" onclick="nextStep(1)">המשך לשלב הבא &larr;</button>
-      </div>
-    </div>
+        <!-- Live Score Header -->
+        <div id="header-stats" class="hidden flex items-center gap-3 md:gap-6">
+            <div class="flex items-center gap-2 bg-amber-500/20 px-3 py-1.5 rounded-xl border border-amber-500/30">
+                <span class="text-amber-400 text-lg">🔥</span>
+                <span id="streak-count" class="font-bold text-amber-300 text-sm md:text-base">0</span>
+            </div>
+            <div class="flex items-center gap-2 bg-emerald-500/20 px-3 py-1.5 rounded-xl border border-emerald-500/30">
+                <span class="text-emerald-400 text-lg">⭐</span>
+                <span id="score-count" class="font-bold text-emerald-300 text-sm md:text-base">0</span>
+            </div>
+            <button onclick="showTopicSelection()" class="bg-slate-700/60 hover:bg-slate-600 text-xs md:text-sm px-3 py-2 rounded-xl transition flex items-center gap-1">
+                <i class="fa-solid fa-house"></i>
+                <span class="hidden sm:inline">נושאים</span>
+            </button>
+        </div>
+    </header>
 
-    <!-- שלב 2 -->
-    <div class="step" id="step2">
-      <h2>שלב 2: חלוקת מנדטים (סה"כ 120)</h2>
-      
-      <div class="counter-banner" id="counterBanner">
-        נותרו לחלוקה: <span id="remainingSeatCount">120</span> מנדטים
-      </div>
+    <!-- Main App Container -->
+    <main class="max-w-5xl mx-auto w-full flex-grow flex flex-col justify-center items-center relative z-10 my-auto">
+        
+        <section id="topic-select-screen" class="w-full animate-pop">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-2 text-white">בחר נושא לתרגול</h2>
+                <p class="text-slate-300 text-sm md:text-base">בחר קטגוריה והתחל לתרגל! לכל נושא לפחות 40 מילים.</p>
+            </div>
 
-      <div id="partiesContainer"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+                <div onclick="selectTopic('numbers')" class="glass-card hover:border-cyan-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🔢</div>
+                    <h3 class="text-lg font-bold text-cyan-300 mb-1">מספרים (1-999)</h3>
+                    <p class="text-xs text-slate-400">One, Twelve, Hundred...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-cyan-950/60 text-cyan-300 rounded-full border border-cyan-800">40+ מילים</span>
+                </div>
 
-      <div class="buttons-container">
-        <button type="button" class="btn-secondary" onclick="prevStep(2)">&rarr; חזור</button>
-        <button type="button" onclick="nextStep(2)">המשך לשלב הבא &larr;</button>
-      </div>
-    </div>
+                <div onclick="selectTopic('food')" class="glass-card hover:border-emerald-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🍕</div>
+                    <h3 class="text-lg font-bold text-emerald-300 mb-1">אוכל (Food)</h3>
+                    <p class="text-xs text-slate-400">Bread, Cheese, Pizza...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-emerald-950/60 text-emerald-300 rounded-full border border-emerald-800">40+ מילים</span>
+                </div>
 
-    <!-- שלב 3 -->
-    <div class="step" id="step3">
-      <h2>שלב 3: הימור על הרכבת הממשלה</h2>
-      <div class="form-group radio-group">
-        <label><input type="radio" name="govOption" value="ממשלה דומה ככל האפשר לנוכחית בראשות נתניהו" required onclick="toggleCustomOption(false)"> ממשלה דומה ככל האפשר לנוכחית בראשות נתניהו</label>
-        <label><input type="radio" name="govOption" value="ממשלה שונה ככל האפשר מהנוכחית בראשות מי שאינו נתניהו" onclick="toggleCustomOption(false)"> ממשלה שונה ככל האפשר מהנוכחית בראשות מי שאינו נתניהו</label>
-        <label><input type="radio" name="govOption" value="ממשלת אחדות כל שהיא בראשות נתניהו" onclick="toggleCustomOption(false)"> ממשלת אחדות כל שהיא בראשות נתניהו</label>
-        <label><input type="radio" name="govOption" value="ממשלת אחדות כל שהיא בראשות מי שאינו נתניהו" onclick="toggleCustomOption(false)"> ממשלת אחדות כל שהיא בראשות מי שאינו נתניהו</label>
-        <label><input type="radio" name="govOption" value="אחר" id="optionOther" onclick="toggleCustomOption(true)"> אופציה אחרת שתפורט בהמשך</label>
-      </div>
+                <div onclick="selectTopic('home')" class="glass-card hover:border-indigo-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🏠</div>
+                    <h3 class="text-lg font-bold text-indigo-300 mb-1">בית ורהיטים</h3>
+                    <p class="text-xs text-slate-400">Kitchen, Bed, Table...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-indigo-950/60 text-indigo-300 rounded-full border border-indigo-800">40+ מילים</span>
+                </div>
 
-      <div class="form-group" id="customOptionContainer">
-        <label for="customGovDetails">פרט את הצעתך/הימורך:</label>
-        <textarea id="customGovDetails" name="customGovDetails" rows="3" placeholder="פרט כאן..."></textarea>
-      </div>
+                <div onclick="selectTopic('family')" class="glass-card hover:border-pink-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">👨‍👩‍👧‍👦</div>
+                    <h3 class="text-lg font-bold text-pink-300 mb-1">משפחה (Family)</h3>
+                    <p class="text-xs text-slate-400">Father, Sister, Cousin...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-pink-950/60 text-pink-300 rounded-full border border-pink-800">40+ מילים</span>
+                </div>
 
-      <div class="buttons-container">
-        <button type="button" class="btn-secondary" onclick="prevStep(3)">&rarr; חזור</button>
-        <button type="submit" id="submitBtn">שלח הימור!</button>
-      </div>
-    </div>
+                <div onclick="selectTopic('tools')" class="glass-card hover:border-amber-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🛠️</div>
+                    <h3 class="text-lg font-bold text-amber-300 mb-1">כלי עבודה</h3>
+                    <p class="text-xs text-slate-400">Hammer, Drill, Saw...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-amber-950/60 text-amber-300 rounded-full border border-amber-800">40+ מילים</span>
+                </div>
 
-  </form>
-</div>
+                <div onclick="selectTopic('games')" class="glass-card hover:border-purple-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🎮</div>
+                    <h3 class="text-lg font-bold text-purple-300 mb-1">משחקים ופנאי</h3>
+                    <p class="text-xs text-slate-400">Puzzle, Chess, Sports...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-purple-950/60 text-purple-300 rounded-full border border-purple-800">40+ מילים</span>
+                </div>
 
-<script>
-  // הכנס כאן את ה-URL מ-Google Apps Script
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6z6HngFtRieObZ04NZdUUhqk-EgzVoW_-ggCusETlUEETvdZ1mudWZcYRSYB_HqE/exec';
+                <div onclick="selectTopic('verbs')" class="glass-card hover:border-fuchsia-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-fuchsia-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🏃‍♂️</div>
+                    <h3 class="text-lg font-bold text-fuchsia-300 mb-1">פעלים (Verbs)</h3>
+                    <p class="text-xs text-slate-400">Run, Jump, Speak...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-fuchsia-950/60 text-fuchsia-300 rounded-full border border-fuchsia-800">40+ מילים</span>
+                </div>
 
-  const parties = [
-    "ליכוד", "ישר - אייזנקוט", "ביחד - בנט", "הדמוקרטים",
-    "ישראל ביתנו", "המפלגה הערבית המאוחדת", "יהדות התורה", "שס",
-    "עוצמה יהודית", "רעמ", "ציונות דתית + זהות", "וינטר",
-    "חילי טרופר ויועז הנדל", "בני גנץ"
-  ];
+                <div onclick="selectTopic('security')" class="glass-card hover:border-red-400 p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 group flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-red-500/20 flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">🚨</div>
+                    <h3 class="text-lg font-bold text-red-300 mb-1">שירותי ביטחון</h3>
+                    <p class="text-xs text-slate-400">Police, Doctor, Rescue...</p>
+                    <span class="mt-4 text-xs font-semibold px-3 py-1 bg-red-950/60 text-red-300 rounded-full border border-red-800">40+ מילים</span>
+                </div>
+            </div>
+        </section>
 
-  // יצירת שדות המפלגות
-  const partiesContainer = document.getElementById('partiesContainer');
-  parties.forEach((party, index) => {
-    const row = document.createElement('div');
-    row.className = 'party-row';
-    row.innerHTML = `
-      <span class="party-label">${party}</span>
-      <input type="number" class="party-input" id="party_${index}" name="${party}" min="0" max="120" value="0" oninput="updateSeats()">
-    `;
-    partiesContainer.appendChild(row);
-  });
+        <section id="game-screen" class="hidden w-full max-w-2xl flex flex-col gap-5 animate-pop">
+            
+            <div class="glass-card p-4 rounded-2xl flex flex-col gap-2">
+                <div class="flex justify-between items-center text-xs md:text-sm text-slate-300">
+                    <span id="current-topic-label" class="font-semibold text-cyan-400">נושא</span>
+                    <span id="progress-text" class="font-mono">מילה 1 מתוך 10</span>
+                </div>
+                <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden p-0.5 border border-slate-700">
+                    <div id="progress-bar" class="bg-gradient-to-r from-cyan-400 to-blue-500 h-full rounded-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+            </div>
 
-  function updateSeats() {
-    let totalAssigned = 0;
-    let hasValidationError = false;
+            <div class="glass-card p-6 md:p-8 rounded-3xl text-center relative overflow-hidden shadow-2xl flex flex-col items-center">
+                
+                <div id="feedback-banner" class="hidden absolute top-0 left-0 right-0 p-3 text-center text-sm font-bold transition-all duration-300">
+                </div>
 
-    parties.forEach((party, index) => {
-      const input = document.getElementById(`party_${index}`);
-      let val = parseInt(input.value);
+                <div class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">תרגם לאנגלית:</div>
+                <div id="hebrew-word" class="text-3xl md:text-5xl font-black text-white my-3 drop-shadow-md">
+                    טוען...
+                </div>
 
-      if (isNaN(val) || val < 0) {
-        val = 0;
-      }
+                <div class="w-full max-w-md my-4 relative">
+                    <input type="text" id="english-input" dir="ltr" placeholder="Type in English..." 
+                        autocomplete="off" spellcheck="false" 
+                        class="w-full bg-slate-900/80 border-2 border-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/20 text-white text-2xl md:text-3xl text-center py-3 px-4 rounded-2xl font-bold tracking-wider outline-none transition duration-200">
+                    <button onclick="playCurrentAudio()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-400 p-2 text-xl transition" title="השמע מילה באנגלית">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
 
-      if (val > 0 && val < 4) {
-        input.classList.add('invalid-input');
-        hasValidationError = true;
-      } else {
-        input.classList.remove('invalid-input');
-      }
+                <div class="flex flex-wrap justify-center items-center gap-3 w-full max-w-md">
+                    <button id="submit-btn" onclick="checkAnswer()" class="btn-gradient text-white font-bold text-lg px-8 py-3 rounded-2xl shadow-lg flex-1 min-w-[140px] flex items-center justify-center gap-2">
+                        <span>בדוק תשובה</span>
+                        <i class="fa-solid fa-paper-plane text-sm"></i>
+                    </button>
 
-      totalAssigned += val;
-    });
+                    <button onclick="giveHint()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-semibold px-4 py-3 rounded-2xl transition flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>רמז</span>
+                    </button>
+                </div>
 
-    const remaining = 120 - totalAssigned;
-    const banner = document.getElementById('counterBanner');
+                <div id="hint-box" class="hidden mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-200 text-sm font-mono dir-ltr">
+                </div>
 
-    if (hasValidationError) {
-      banner.className = 'counter-banner error';
-      banner.innerHTML = 'שגיאה: מפלגה שעוברת חייבת לקבל לפחות 4 מנדטים (או 0).';
-    } else if (remaining < 0) {
-      banner.className = 'counter-banner error';
-      banner.innerHTML = `חורג ב-${Math.abs(remaining)} מנדטים! (סך הכל ${totalAssigned}/120)`;
-    } else if (remaining === 0) {
-      banner.className = 'counter-banner success';
-      banner.innerHTML = 'חלוקה מושלמת! חולקו בדיוק 120 מנדטים 👍';
-    } else {
-      banner.className = 'counter-banner';
-      banner.innerHTML = `נותרו לחלוקה: <strong>${remaining}</strong> מנדטים`;
-    }
+                <div id="answer-reveal-box" class="hidden mt-4 p-4 bg-emerald-500/20 border border-emerald-500/40 rounded-2xl text-center animate-pop w-full">
+                    <p class="text-xs text-slate-300 mb-1">התשובה הנכונה היא:</p>
+                    <div id="correct-answer-text" class="text-2xl font-black text-emerald-300 tracking-wider font-mono"></div>
+                    <button onclick="nextQuestion()" class="mt-3 px-6 py-2 bg-emerald-500 text-slate-900 font-bold rounded-xl text-sm hover:bg-emerald-400 transition">
+                        המשך למילה הבאה <i class="fa-solid fa-arrow-left mr-1"></i>
+                    </button>
+                </div>
+            </div>
 
-    return (remaining === 0 && !hasValidationError);
-  }
+            <div class="glass-card p-3 rounded-2xl">
+                <div class="flex justify-between items-center mb-2 px-1">
+                    <span class="text-xs text-slate-400 font-medium">מקלדת אנגלית אינטראקטיבית</span>
+                    <button onclick="toggleVirtualKeyboard()" class="text-xs text-cyan-400 hover:underline">
+                        <span id="toggle-kb-text">הסתר מקלדת</span>
+                    </button>
+                </div>
+                <div id="virtual-keyboard" class="flex flex-col gap-1.5 dir-ltr">
+                    <div class="flex justify-center gap-1">
+                        <button onclick="typeKey('q')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">Q</button>
+                        <button onclick="typeKey('w')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">W</button>
+                        <button onclick="typeKey('e')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">E</button>
+                        <button onclick="typeKey('r')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">R</button>
+                        <button onclick="typeKey('t')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">T</button>
+                        <button onclick="typeKey('y')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">Y</button>
+                        <button onclick="typeKey('u')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">U</button>
+                        <button onclick="typeKey('i')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">I</button>
+                        <button onclick="typeKey('o')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">O</button>
+                        <button onclick="typeKey('p')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">P</button>
+                    </div>
+                    <div class="flex justify-center gap-1">
+                        <button onclick="typeKey('a')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">A</button>
+                        <button onclick="typeKey('s')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">S</button>
+                        <button onclick="typeKey('d')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">D</button>
+                        <button onclick="typeKey('f')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">F</button>
+                        <button onclick="typeKey('g')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">G</button>
+                        <button onclick="typeKey('h')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">H</button>
+                        <button onclick="typeKey('j')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">J</button>
+                        <button onclick="typeKey('k')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">K</button>
+                        <button onclick="typeKey('l')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">L</button>
+                    </div>
+                    <div class="flex justify-center gap-1">
+                        <button onclick="typeKey('z')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">Z</button>
+                        <button onclick="typeKey('x')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">X</button>
+                        <button onclick="typeKey('c')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">C</button>
+                        <button onclick="typeKey('v')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">V</button>
+                        <button onclick="typeKey('b')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">B</button>
+                        <button onclick="typeKey('n')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">N</button>
+                        <button onclick="typeKey('m')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">M</button>
+                        <button onclick="typeKey('-')" class="key-btn font-bold py-2 px-2.5 md:px-3.5 rounded-lg text-sm md:text-base">-</button>
+                        <button onclick="typeKey('backspace')" class="key-btn bg-rose-500/30 text-rose-200 font-bold py-2 px-3 rounded-lg text-sm">⌫</button>
+                    </div>
+                    <div class="flex justify-center gap-1 mt-0.5">
+                        <button onclick="typeKey(' ')" class="key-btn font-bold py-2 w-1/2 rounded-lg text-xs uppercase tracking-wider text-slate-300">Space (רווח)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  function nextStep(currentStep) {
-    if (currentStep === 1) {
-      const nameInput = document.getElementById('userName');
+        <section id="summary-screen" class="hidden w-full max-w-lg glass-card p-8 rounded-3xl text-center animate-pop shadow-2xl">
+            <div id="trophy-icon" class="text-6xl mb-3 animate-bounce-short">🏆</div>
+            <h2 class="text-3xl font-black text-white mb-2">כל הכבוד! סיימת את הסיבוב!</h2>
+            <p id="summary-topic-name" class="text-cyan-400 font-semibold mb-6">נושא: מספרים</p>
 
-      if (!nameInput.value.trim()) {
-        alert('אנא הזן את שמך.');
-        nameInput.focus();
-        return;
-      }
-    } else if (currentStep === 2) {
-      const isValid = updateSeats();
-      if (!isValid) {
-        alert('לא ניתן להמשיך! חובה לחלק בדיוק 120 מנדטים ולוודא שאין מפלגות עם 1 עד 3 מנדטים.');
-        return;
-      }
-    }
+            <div id="star-rating" class="flex justify-center gap-3 text-4xl text-amber-400 mb-6">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
 
-    document.getElementById(`step${currentStep}`).classList.remove('active');
-    document.getElementById(`step${currentStep + 1}`).classList.add('active');
-    window.scrollTo(0, 0);
-  }
+            <div class="bg-slate-900/60 rounded-2xl p-4 mb-6 border border-slate-700 space-y-3">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-400">תשובות נכונות:</span>
+                    <span id="summary-correct" class="font-bold text-emerald-400 text-lg">0 / 10</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-400">ניקוד כולל:</span>
+                    <span id="summary-score" class="font-bold text-amber-400 text-lg">0</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-400">רצף שיא (Streak):</span>
+                    <span id="summary-streak" class="font-bold text-cyan-400 text-lg">0</span>
+                </div>
+            </div>
 
-  function prevStep(currentStep) {
-    document.getElementById(`step${currentStep}`).classList.remove('active');
-    document.getElementById(`step${currentStep - 1}`).classList.add('active');
-    window.scrollTo(0, 0);
-  }
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="startRound()" class="btn-gradient text-white font-bold py-3 px-6 rounded-2xl flex-1 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>שחק שוב</span>
+                </button>
+                <button onclick="showTopicSelection()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-2xl flex-1 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-list"></i>
+                    <span>נושא אחר</span>
+                </button>
+            </div>
+        </section>
 
-  function toggleCustomOption(show) {
-    const container = document.getElementById('customOptionContainer');
-    container.style.display = show ? 'block' : 'none';
-    if (!show) {
-      document.getElementById('customGovDetails').value = '';
-    }
-  }
+    </main>
 
-  document.getElementById('electionsForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    <footer class="max-w-5xl mx-auto w-full text-center text-xs text-slate-400 py-3 mt-4">
+        תרגול אנגלית אינטראקטיבי לכיתה ו' • לומדים ונהנים
+    </footer>
 
-    if (!updateSeats()) {
-      alert('חלוקת המנדטים אינה תקינה.');
-      return;
-    }
+    <script>
+        const vocabularyDB = {
+            numbers: [
+                { he: 'אחד', en: 'one' }, { he: 'שתיים', en: 'two' }, { he: 'שלוש', en: 'three' }, { he: 'ארבע', en: 'four' },
+                { he: 'חמש', en: 'five' }, { he: 'שש', en: 'six' }, { he: 'שבע', en: 'seven' }, { he: 'שמונה', en: 'eight' },
+                { he: 'תשע', en: 'nine' }, { he: 'עשר', en: 'ten' }, { he: 'אחד עשר', en: 'eleven' }, { he: 'שתים עשרה', en: 'twelve' },
+                { he: 'שלוש עשרה', en: 'thirteen' }, { he: 'ארבע עשרה', en: 'fourteen' }, { he: 'חמש עשרה', en: 'fifteen' }, { he: 'שש עשרה', en: 'sixteen' },
+                { he: 'שבע עשרה', en: 'seventeen' }, { he: 'שמונה עשרה', en: 'eighteen' }, { he: 'תשע עשרה', en: 'nineteen' }, { he: 'עשרים', en: 'twenty' },
+                { he: 'עשרים ואחד', en: 'twenty-one' }, { he: 'עשרים וחמש', en: 'twenty-five' }, { he: 'שלושים', en: 'thirty' }, { he: 'ארבעים', en: 'forty' },
+                { he: 'חמישים', en: 'fifty' }, { he: 'שישים', en: 'sixty' }, { he: 'שבעים', en: 'seventy' }, { he: 'שמונים', en: 'eighty' },
+                { he: 'תשעים', en: 'ninety' }, { he: 'מאה', en: 'one hundred' }, { he: 'מאתיים', en: 'two hundred' }, { he: 'שלוש מאות', en: 'three hundred' },
+                { he: 'ארבע מאות', en: 'four hundred' }, { he: 'חמש מאות', en: 'five hundred' }, { he: 'שש מאות', en: 'six hundred' }, { he: 'שבע מאות', en: 'seven hundred' },
+                { he: 'שמונה מאות', en: 'eight hundred' }, { he: 'תשע מאות', en: 'nine hundred' }, { he: 'תשע מאות תשעים ותשע', en: 'nine hundred ninety-nine' }, { he: 'אלף', en: 'one thousand' }
+            ],
+            food: [
+                { he: 'לחם', en: 'bread' }, { he: 'גבינה', en: 'cheese' }, { he: 'תפוח', en: 'apple' }, { he: 'בננה', en: 'banana' },
+                { he: 'עוף / עוף מבושל', en: 'chicken' }, { he: 'מרק', en: 'soup' }, { he: 'אורז', en: 'rice' }, { he: 'פיצה', en: 'pizza' },
+                { he: 'כריך / סנדוויץ\'', en: 'sandwich' }, { he: 'גלידה', en: 'ice cream' }, { he: 'מיץ', en: 'juice' }, { he: 'מים', en: 'water' },
+                { he: 'חמאה', en: 'butter' }, { he: 'עוגה', en: 'cake' }, { he: 'עוגיה', en: 'cookie' }, { he: 'סלט', en: 'salad' },
+                { he: 'עגבניה', en: 'tomato' }, { he: 'תפוח אדמה', en: 'potato' }, { he: 'גזר', en: 'carrot' }, { he: 'דג', en: 'fish' },
+                { he: 'בשר', en: 'meat' }, { he: 'חלב', en: 'milk' }, { he: 'ביצה', en: 'egg' }, { he: 'סוכר', en: 'sugar' },
+                { he: 'מלח', en: 'salt' }, { he: 'פלפל', en: 'pepper' }, { he: 'פסטה', en: 'pasta' }, { he: 'תות', en: 'strawberry' },
+                { he: 'תפוז', en: 'orange' }, { he: 'לימון', en: 'lemon' }, { he: 'שוקולד', en: 'chocolate' }, { he: 'תה', en: 'tea' },
+                { he: 'קפה', en: 'coffee' }, { he: 'ארוחת בוקר', en: 'breakfast' }, { he: 'ארוחת צהריים', en: 'lunch' }, { he: 'ארוחת ערב', en: 'dinner' },
+                { he: 'חטיף', en: 'snack' }, { he: 'פרי', en: 'fruit' }, { he: 'ירק', en: 'vegetable' }, { he: 'פנקייק', en: 'pancake' }
+            ],
+            home: [
+                { he: 'מטבח', en: 'kitchen' }, { he: 'חדר שינה', en: 'bedroom' }, { he: 'חדר רחצה', en: 'bathroom' }, { he: 'סלון', en: 'living room' },
+                { he: 'דלת', en: 'door' }, { he: 'חלון', en: 'window' }, { he: 'מיטה', en: 'bed' }, { he: 'שולחן', en: 'table' },
+                { he: 'כיסא', en: 'chair' }, { he: 'ספה', en: 'sofa' }, { he: 'ארון', en: 'closet' }, { he: 'מראה', en: 'mirror' },
+                { he: 'מנורה', en: 'lamp' }, { he: 'שעון', en: 'clock' }, { he: 'מקרר', en: 'refrigerator' }, { he: 'תנור', en: 'oven' },
+                { he: 'כיור', en: 'sink' }, { he: 'מקלחת', en: 'shower' }, { he: 'שטיח', en: 'carpet' }, { he: 'כרית', en: 'pillow' },
+                { he: 'שמיכה', en: 'blanket' }, { he: 'קיר', en: 'wall' }, { he: 'רצפה', en: 'floor' }, { he: 'גג', en: 'roof' },
+                { he: 'טלוויזיה', en: 'television' }, { he: 'מחשב', en: 'computer' }, { he: 'מדף', en: 'shelf' }, { he: 'מגבת', en: 'towel' },
+                { he: 'סבון', en: 'soap' }, { he: 'מפתח', en: 'key' }, { he: 'גינה', en: 'garden' }, { he: 'מרפסת', en: 'balcony' },
+                { he: 'מדרגות', en: 'stairs' }, { he: 'וילון', en: 'curtain' }, { he: 'צלחת', en: 'plate' }, { he: 'כוס', en: 'cup' },
+                { he: 'כף', en: 'spoon' }, { he: 'מזלג', en: 'fork' }, { he: 'סכין', en: 'knife' }, { he: 'פח אשפה', en: 'trash' }
+            ],
+            family: [
+                { he: 'אבא', en: 'father' }, { he: 'אמא', en: 'mother' }, { he: 'אח', en: 'brother' }, { he: 'אחות', en: 'sister' },
+                { he: 'סבא', en: 'grandfather' }, { he: 'סבתא', en: 'grandmother' }, { he: 'דוד', en: 'uncle' }, { he: 'דודה', en: 'aunt' },
+                { he: 'בן דוד / בת דודה', en: 'cousin' }, { he: 'הורים', en: 'parents' }, { he: 'בן', en: 'son' }, { he: 'בת', en: 'daughter' },
+                { he: 'תינוק', en: 'baby' }, { he: 'משפחה', en: 'family' }, { he: 'בעל', en: 'husband' }, { he: 'אישה (רעיה)', en: 'wife' },
+                { he: 'אחיין', en: 'nephew' }, { he: 'אחיינית', en: 'niece' }, { he: 'נכד', en: 'grandson' }, { he: 'נכדה', en: 'granddaughter' },
+                { he: 'קרוב משפחה', en: 'relative' }, { he: 'ילד', en: 'child' }, { he: 'ילדים', en: 'children' }, { he: 'תאומים', en: 'twins' },
+                { he: 'אב חורג', en: 'stepfather' }, { he: 'אם חורגת', en: 'stepmother' }, { he: 'אח חורג', en: 'stepbrother' }, { he: 'אחות חורגת', en: 'stepsister' },
+                { he: 'מבוגר', en: 'adult' }, { he: 'נער / מתבגר', en: 'teenager' }, { he: 'איש / גבר', en: 'man' }, { he: 'אישה', en: 'woman' },
+                { he: 'ילד / בן', en: 'boy' }, { he: 'ילדה / בת', en: 'girl' }, { he: 'חבר', en: 'friend' }, { he: 'שכן', en: 'neighbor' },
+                { he: 'אדם / בן אנוש', en: 'person' }, { he: 'אנשים', en: 'people' }, { he: 'אב קדמון', en: 'ancestor' }, { he: 'דור', en: 'generation' }
+            ],
+            tools: [
+                { he: 'פטיש', en: 'hammer' }, { he: 'מברג', en: 'screwdriver' }, { he: 'משור', en: 'saw' }, { he: 'פלייר', en: 'pliers' },
+                { he: 'מפתח ברגים', en: 'wrench' }, { he: 'מקדחה', en: 'drill' }, { he: 'מסמר', en: 'nail' }, { he: 'בורג', en: 'screw' },
+                { he: 'סרט מדביק / דבק סלוטייפ', en: 'tape' }, { he: 'סולם', en: 'ladder' }, { he: 'גרזן', en: 'axe' }, { he: 'את חפירה', en: 'shovel' },
+                { he: 'מגרפה', en: 'rake' }, { he: 'פנס', en: 'flashlight' }, { he: 'מספריים', en: 'scissors' }, { he: 'סרגל', en: 'ruler' },
+                { he: 'מברשת צבע', en: 'paintbrush' }, { he: 'דלי', en: 'bucket' }, { he: 'מריצה', en: 'wheelbarrow' }, { he: 'צינור', en: 'hose' },
+                { he: 'מטאטא', en: 'broom' }, { he: 'יעיל (כף אשפה)', en: 'dustpan' }, { he: 'ארגז כלים', en: 'toolbox' }, { he: 'דבק', en: 'glue' },
+                { he: 'כבל / תיל', en: 'wire' }, { he: 'בורג גדול (בולט)', en: 'bolt' }, { he: 'אום', en: 'nut' }, { he: 'פלס', en: 'level' },
+                { he: 'חבל', en: 'rope' }, { he: 'שרשרת', en: 'chain' }, { he: 'סכין יפנית / סכין', en: 'knife' }, { he: 'קסדה', en: 'helmet' },
+                { he: 'כפפות', en: 'gloves' }, { he: 'משקפי מגן', en: 'safety glasses' }, { he: 'סרט מידה', en: 'tape measure' }, { he: 'נייר זכוכית', en: 'sandpaper' },
+                { he: 'מגנט', en: 'magnet' }, { he: 'מנעול', en: 'lock' }, { he: 'מפסלת', en: 'chisel' }, { he: 'מלחציים', en: 'vice' }
+            ],
+            games: [
+                { he: 'פאזל', en: 'puzzle' }, { he: 'בובה', en: 'doll' }, { he: 'כדור', en: 'ball' }, { he: 'קלפים', en: 'cards' },
+                { he: 'שחמט', en: 'chess' }, { he: 'לגו', en: 'lego' }, { he: 'אופניים', en: 'bicycle' }, { he: 'סקייטבורד', en: 'skateboard' },
+                { he: 'קורקינט', en: 'scooter' }, { he: 'גולה', en: 'marble' }, { he: 'קובייה', en: 'dice' }, { he: 'טרמפולינה', en: 'trampoline' },
+                { he: 'משחק וידאו', en: 'video game' }, { he: 'משחק קופסה', en: 'board game' }, { he: 'נדנדה', en: 'swing' }, { he: 'מגלשה', en: 'slide' },
+                { he: 'חבל קפיצה', en: 'jump rope' }, { he: 'עפיפון', en: 'kite' }, { he: 'מחבואים', en: 'hide and seek' }, { he: 'תפוס אותי (תופסת)', en: 'tag' },
+                { he: 'רובוט', en: 'robot' }, { he: 'דובי', en: 'teddy bear' }, { he: 'דמות פעולה', en: 'action figure' }, { he: 'יו-יו', en: 'yo-yo' },
+                { he: 'צבעים', en: 'paints' }, { he: 'ציור', en: 'drawing' }, { he: 'מוזיקה', en: 'music' }, { he: 'ריקוד', en: 'dance' },
+                { he: 'שירה', en: 'singing' }, { he: 'קריאה', en: 'reading' }, { he: 'ספורט', en: 'sports' }, { he: 'כדורסל', en: 'basketball' },
+                { he: 'כדורגל', en: 'football' }, { he: 'טניס', en: 'tennis' }, { he: 'שחייה', en: 'swimming' }, { he: 'דיג', en: 'fishing' },
+                { he: 'קסם', en: 'magic' }, { he: 'יצירה', en: 'craft' }, { he: 'אוסף', en: 'collection' }, { he: 'גיימינג', en: 'gaming' }
+            ],
+            verbs: [
+                { he: 'לרוץ', en: 'run' }, { he: 'ללכת', en: 'walk' }, { he: 'לקפוץ', en: 'jump' }, { he: 'לישון', en: 'sleep' },
+                { he: 'לאכול', en: 'eat' }, { he: 'לשתות', en: 'drink' }, { he: 'לקרוא', en: 'read' }, { he: 'לכתוב', en: 'write' },
+                { he: 'לדבר', en: 'speak' }, { he: 'להקשיב', en: 'listen' }, { he: 'להביט / להסתכל', en: 'look' }, { he: 'לראות', en: 'see' },
+                { he: 'לשמוע', en: 'hear' }, { he: 'לשחק', en: 'play' }, { he: 'לעבוד', en: 'work' }, { he: 'ללמוד', en: 'learn' },
+                { he: 'ללמד', en: 'teach' }, { he: 'לקנות', en: 'buy' }, { he: 'למכור', en: 'sell' }, { he: 'לבשל', en: 'cook' },
+                { he: 'לנקות', en: 'clean' }, { he: 'לרחוץ / לשטוף', en: 'wash' }, { he: 'לפתוח', en: 'open' }, { he: 'לסגור', en: 'close' },
+                { he: 'להתחיל', en: 'start' }, { he: 'לעצור', en: 'stop' }, { he: 'לעוף / שט בטיסה', en: 'fly' }, { he: 'לשחות', en: 'swim' },
+                { he: 'לנהוג', en: 'drive' }, { he: 'לרכוב', en: 'ride' }, { he: 'לשיר', en: 'sing' }, { he: 'לרקוד', en: 'dance' },
+                { he: 'לצייר (בעיפרון)', en: 'draw' }, { he: 'לצבוע / לצייר בצבע', en: 'paint' }, { he: 'לחשוב', en: 'think' }, { he: 'לדעת', en: 'know' },
+                { he: 'לאהוב', en: 'love' }, { he: 'לרצות', en: 'want' }, { he: 'להזדקק / לצרוך', en: 'need' }, { he: 'לעזור', en: 'help' }
+            ],
+            security: [
+                { he: 'משטרה', en: 'police' }, { he: 'כבאית / לוחם אש', en: 'firefighter' }, { he: 'רופא', en: 'doctor' }, { he: 'אח / אחות רפואית', en: 'nurse' },
+                { he: 'אמבולנס', en: 'ambulance' }, { he: 'בית חולים', en: 'hospital' }, { he: 'שוטר', en: 'police officer' }, { he: 'תחנת משטרה', en: 'police station' },
+                { he: 'תחנת כיבוי', en: 'fire station' }, { he: 'מאבטח / שומר', en: 'guard' }, { he: 'חייל', en: 'soldier' }, { he: 'צבא', en: 'army' },
+                { he: 'ביטחון', en: 'security' }, { he: 'חירום', en: 'emergency' }, { he: 'חילוץ / הצלה', en: 'rescue' }, { he: 'קסדה', en: 'helmet' },
+                { he: 'מדים', en: 'uniform' }, { he: 'סירנה / סירנת אזעקה', en: 'siren' }, { he: 'תג / סמל', en: 'badge' }, { he: 'אזיקים', en: 'handcuffs' },
+                { he: 'מגן', en: 'shield' }, { he: 'אזעקה', en: 'alarm' }, { he: 'כבאית (רכב)', en: 'fire truck' }, { he: 'ניידת משטרה', en: 'police car' }, { he: 'חובש', en: 'medic' },
+                { he: 'עזרה ראשונה', en: 'first aid' }, { he: 'בטיחות', en: 'safety' }, { he: 'הגנה', en: 'protection' }, { he: 'סכנה', en: 'danger' },
+                { he: 'אזהרה', en: 'warning' }, { he: 'עזרה', en: 'help' }, { he: 'גיבור', en: 'hero' }, { he: 'להתקשר / לקרוא', en: 'call' },
+                { he: 'לדווח', en: 'report' }, { he: 'חיפוש', en: 'search' }, { he: 'סיור', en: 'patrol' }, { he: 'בלש', en: 'detective' },
+                { he: 'טייס', en: 'pilot' }, { he: 'משמר החופים', en: 'coast guard' }, { he: 'שומר שער', en: 'gatekeeper' }
+            ]
+        };
 
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.innerText = 'שולח...';
+        const topicTitles = {
+            numbers: 'מספרים (1-999)',
+            food: 'אוכל (Food)',
+            home: 'בית ורהיטים',
+            family: 'משפחה (Family)',
+            tools: 'כלי עבודה',
+            games: 'משחקים ופנאי',
+            verbs: 'פעלים (Verbs)',
+            security: 'שירותי ביטחון'
+        };
 
-    const formData = new FormData(this);
-    
-    // הוספת תאריך ושעה מדויקים של ההגשה
-    const now = new Date();
-    const formattedTimestamp = now.toLocaleString('he-IL');
-    formData.append('betTimestamp', formattedTimestamp);
+        let currentTopicKey = 'numbers';
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let streak = 0;
+        let maxStreak = 0;
+        let currentAttempts = 0;
+        let correctAnswersCount = 0;
+        const totalQuestionsPerRound = 10;
 
-    const searchParams = new URLSearchParams();
+        const AudioFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            },
+            playSuccess() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1);
+                osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2);
+                osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.3);
+                
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 0.5);
+            },
+            playError() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.setValueAtTime(130, now + 0.15);
+                
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 0.35);
+            },
+            playClick() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+        };
 
-    for (const pair of formData.entries()) {
-      searchParams.append(pair[0], pair[1]);
-    }
+        function speakEnglishWord(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
 
-    fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      body: searchParams
-    })
-    .then(() => {
-      alert('ההימור שלך נשלח בהצלחה והתקבל בגיליון!');
-      location.reload();
-    })
-    .catch(err => {
-      console.error(err);
-      alert('ארעה שגיאה בשליחה.');
-      submitBtn.disabled = false;
-      submitBtn.innerText = 'שלח הימור!';
-    });
-  });
+        function playCurrentAudio() {
+            if (currentQuestions[currentIndex]) {
+                speakEnglishWord(currentQuestions[currentIndex].en);
+            }
+        }
 
-  updateSeats();
-</script>
+        function selectTopic(topicKey) {
+            AudioFX.playClick();
+            currentTopicKey = topicKey;
+            score = 0;
+            streak = 0;
+            maxStreak = 0;
+            updateStatsUI();
+            
+            document.getElementById('topic-select-screen').classList.add('hidden');
+            document.getElementById('summary-screen').classList.add('hidden');
+            document.getElementById('header-stats').classList.remove('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
 
+            startRound();
+        }
+
+        function showTopicSelection() {
+            AudioFX.playClick();
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('summary-screen').classList.add('hidden');
+            document.getElementById('header-stats').classList.add('hidden');
+            document.getElementById('topic-select-screen').classList.remove('hidden');
+        }
+
+        function shuffleArray(arr) {
+            const shuffled = [...arr];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startRound() {
+            const pool = vocabularyDB[currentTopicKey] || vocabularyDB.numbers;
+            const shuffled = shuffleArray(pool);
+            currentQuestions = shuffled.slice(0, totalQuestionsPerRound);
+            currentIndex = 0;
+            correctAnswersCount = 0;
+
+            document.getElementById('current-topic-label').textContent = 'נושא: ' + topicTitles[currentTopicKey];
+            document.getElementById('summary-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            currentAttempts = 0;
+            
+            const feedback = document.getElementById('feedback-banner');
+            feedback.className = 'hidden absolute top-0 left-0 right-0 p-3 text-center text-sm font-bold transition-all duration-300';
+            document.getElementById('hint-box').classList.add('hidden');
+            document.getElementById('hint-box').textContent = '';
+            document.getElementById('answer-reveal-box').classList.add('hidden');
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+            const input = document.getElementById('english-input');
+            input.value = '';
+            input.classList.remove('border-rose-500', 'border-emerald-500');
+            input.focus();
+
+            const currentObj = currentQuestions[currentIndex];
+            document.getElementById('hebrew-word').textContent = currentObj.he;
+            document.getElementById('progress-text').textContent = `מילה ${currentIndex + 1} מתוך ${totalQuestionsPerRound}`;
+            
+            const progressPct = ((currentIndex + 1) / totalQuestionsPerRound) * 100;
+            document.getElementById('progress-bar').style.width = progressPct + '%';
+
+            setTimeout(() => {
+                speakEnglishWord(currentObj.en);
+            }, 300);
+        }
+
+        function giveHint() {
+            AudioFX.playClick();
+            const currentObj = currentQuestions[currentIndex];
+            const target = currentObj.en.trim();
+            const hintBox = document.getElementById('hint-box');
+            
+            const firstLetter = target.charAt(0).toUpperCase();
+            const length = target.length;
+            
+            hintBox.innerHTML = `<i class="fa-solid fa-circle-info ml-1"></i> המילה מתחילה באות <span class="font-bold underline">${firstLetter}</span> ומכילה <span class="font-bold">${length}</span> אותיות.`;
+            hintBox.classList.remove('hidden');
+        }
+
+        function checkAnswer() {
+            const inputEl = document.getElementById('english-input');
+            const userRaw = inputEl.value;
+            const target = currentQuestions[currentIndex].en;
+
+            const cleanUser = userRaw.trim().toLowerCase().replace(/\s+/g, ' ');
+            const cleanTarget = target.trim().toLowerCase().replace(/\s+/g, ' ');
+
+            if (cleanUser === '') {
+                showFeedback('אנא הקלד מילה באנגלית!', 'warning');
+                return;
+            }
+
+            currentAttempts++;
+
+            if (cleanUser === cleanTarget) {
+                handleSuccess();
+            } else {
+                if (currentAttempts === 1) {
+                    handleFirstMistake();
+                } else {
+                    handleSecondMistake();
+                }
+            }
+        }
+
+        function handleSuccess() {
+            AudioFX.playSuccess();
+            correctAnswersCount++;
+            streak++;
+            if (streak > maxStreak) maxStreak = streak;
+
+            const addedPoints = currentAttempts === 1 ? 10 : 5;
+            score += addedPoints;
+            updateStatsUI();
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 60,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            const inputEl = document.getElementById('english-input');
+            inputEl.classList.add('border-emerald-500');
+
+            showFeedback(`כל הכבוד! נכון מאוד! (+${addedPoints} נקודות)`, 'success');
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
+        }
+
+        function handleFirstMistake() {
+            AudioFX.playError();
+            streak = 0;
+            updateStatsUI();
+
+            const inputContainer = document.getElementById('english-input').parentElement;
+            inputContainer.classList.add('animate-shake');
+            setTimeout(() => {
+                inputContainer.classList.remove('animate-shake');
+            }, 500);
+
+            showFeedback('לא מדויק! נסה שוב, יש לך עוד ניסיון אחד 🙏', 'error');
+        }
+
+        function handleSecondMistake() {
+            AudioFX.playError();
+            streak = 0;
+            updateStatsUI();
+
+            showFeedback('גם בניסיון השני לא הלך... הנה התשובה הנכונה:', 'reveal');
+
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').classList.add('opacity-50', 'cursor-not-allowed');
+
+            const answerBox = document.getElementById('answer-reveal-box');
+            document.getElementById('correct-answer-text').textContent = currentQuestions[currentIndex].en;
+            answerBox.classList.remove('hidden');
+
+            speakEnglishWord(currentQuestions[currentIndex].en);
+        }
+
+        function showFeedback(msg, type) {
+            const banner = document.getElementById('feedback-banner');
+            banner.classList.remove('hidden', 'bg-emerald-500', 'bg-amber-500', 'bg-rose-500', 'text-slate-900', 'text-white');
+
+            if (type === 'success') {
+                banner.classList.add('bg-emerald-500', 'text-slate-900');
+            } else if (type === 'error') {
+                banner.classList.add('bg-rose-500', 'text-white');
+            } else if (type === 'warning') {
+                banner.classList.add('bg-amber-500', 'text-slate-900');
+            } else if (type === 'reveal') {
+                banner.classList.add('bg-slate-700', 'text-cyan-300');
+            }
+
+            banner.textContent = msg;
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < totalQuestionsPerRound) {
+                loadQuestion();
+            } else {
+                finishRound();
+            }
+        }
+
+        function typeKey(key) {
+            AudioFX.playClick();
+            const input = document.getElementById('english-input');
+            if (key === 'backspace') {
+                input.value = input.value.slice(0, -1);
+            } else {
+                input.value += key;
+            }
+            input.focus();
+        }
+
+        function toggleVirtualKeyboard() {
+            const kb = document.getElementById('virtual-keyboard');
+            const btnText = document.getElementById('toggle-kb-text');
+            if (kb.classList.contains('hidden')) {
+                kb.classList.remove('hidden');
+                btnText.textContent = 'הסתר מקלדת';
+            } else {
+                kb.classList.add('hidden');
+                btnText.textContent = 'הצג מקלדת';
+            }
+        }
+
+        function updateStatsUI() {
+            document.getElementById('streak-count').textContent = streak;
+            document.getElementById('score-count').textContent = score;
+        }
+
+        function finishRound() {
+            AudioFX.playSuccess();
+            
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('summary-screen').classList.remove('hidden');
+
+            document.getElementById('summary-topic-name').textContent = 'נושא: ' + topicTitles[currentTopicKey];
+            document.getElementById('summary-correct').textContent = `${correctAnswersCount} / ${totalQuestionsPerRound}`;
+            document.getElementById('summary-score').textContent = score;
+            document.getElementById('summary-streak').textContent = maxStreak;
+
+            const starContainer = document.getElementById('star-rating');
+            let starsHTML = '';
+            let starsCount = 1;
+
+            if (correctAnswersCount >= 9) {
+                starsCount = 3;
+            } else if (correctAnswersCount >= 6) {
+                starsCount = 2;
+            }
+
+            for (let i = 0; i < 3; i++) {
+                if (i < starsCount) {
+                    starsHTML += '<i class="fa-solid fa-star text-amber-400"></i>';
+                } else {
+                    starsHTML += '<i class="fa-regular fa-star text-slate-600"></i>';
+                }
+            }
+            starContainer.innerHTML = starsHTML;
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 120,
+                    spread: 100,
+                    origin: { y: 0.5 }
+                });
+            }
+        }
+
+        document.getElementById('english-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const answerBox = document.getElementById('answer-reveal-box');
+                if (!answerBox.classList.contains('hidden')) {
+                    nextQuestion();
+                } else {
+                    checkAnswer();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
